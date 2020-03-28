@@ -36,12 +36,12 @@ except FileNotFoundError as err:
     sys.exit(ERROR_RETURN)
 else:
     valid_products = []
+    
     with open(args.filename, newline='') as f:
         reader = csv.reader(f)
+        rows = list(map(tuple, reader))
         CATEGORIES_COLUMN = 25
-        for row in reader:
-            if row[CATEGORIES_COLUMN] != '':
-                valid_products.append(row)
+        valid_products = [row for row in rows if row[CATEGORIES_COLUMN] != '']
     with open(output_filename, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerows(valid_products)
